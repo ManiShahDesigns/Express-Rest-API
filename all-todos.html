@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container py-3">
+        <div class="row mb-3">
+            <div class="offset-xl-3 col-xl-6 offset-lg-2 col-lg-8 col-12">
+                <h1>All Todos</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="all-todos"></div>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <script>
+
+            const todosDiv = document.getElementById('all-todos')
+
+            let generateDataHTML;
+
+            const getAllTodos = async () => {
+                const response = await fetch('http://localhost:3000/todos')
+                const todos = await response.json()
+                return todos;
+            }
+
+            getAllTodos()
+                .then(todos => {
+                    todos.map((todo) => {
+                        generateDataHTML
+                            = `
+                        <div class="col-lg-4">
+                            <h2 class="mb-4">
+                                ${todo.title}
+                            </h2>
+
+                            <div>
+                                <a href="/todos/all/edit/${todo.id}" class="btn btn-success">Edit</a>
+
+                                <a href="/todos/delete/${todo.id}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>`
+
+                        todosDiv.innerHTML = todosDiv.innerHTML + generateDataHTML
+                    })
+                })
+                .catch(error => console.error(error))
+
+        </script>
+    </footer>
+</body>
+
+
+</html>
