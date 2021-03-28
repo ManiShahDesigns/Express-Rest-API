@@ -9,6 +9,7 @@ const uuid = require('uuid');
 // Configure Express
 const app = express();
 const port = 3000;
+app.use("/public", express.static(__dirname + '/public'));
 
 // Middleware
 app.use(cors());
